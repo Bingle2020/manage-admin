@@ -1,6 +1,5 @@
 export default {
     // 是否登陆过
-    token: false,
-    
+    token: '',
     name: 'bin'
 }

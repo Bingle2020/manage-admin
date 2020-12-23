@@ -1,17 +1,27 @@
 <template>
   <el-container>
-    <el-aside width="200px">
+    <el-aside width="202px">
       <Menu></Menu>
     </el-aside>
-    <el-main>Main</el-main>
+    <el-main>
+      <Header></Header>
+      <!-- <Tabs></Tabs> -->
+      <Content></Content>
+    </el-main>
   </el-container>
 </template>
 
 <script>
-import Menu from "@/components/menu"
+import Menu from "@/components/layout/menu";
+import Header from "@/components/layout/header";
+// import Tabs from "@/components/layout/tabs";
+import Content from "@/components/layout/content";
 export default {
   components: {
-    Menu
+    Menu,
+    Header,
+    // Tabs,
+    Content
   }
 };
 </script>
@@ -27,7 +37,7 @@ export default {
   box-sizing: border-box;
 }
 .el-main {
-  /* background-color: #97b1d6; */
+  padding: 0;
   height: 100%;
   color: #333;
 }

@@ -6,18 +6,20 @@ import router from './router'
 import Vuex from 'vuex'
 import ElementUI from 'element-ui';
 import stores from '@/vuex/index';
-import 'element-ui/lib/theme-chalk/index.css';
+import axios from '@/api/http';
 import '@/assets/css/common.scss';
+import 'element-ui/lib/theme-chalk/index.css';
 import '@/assets/css/element.scss';
 
-export default store;
+
 
 Vue.use(Vuex);
 Vue.use(ElementUI);
 
 const store = new Vuex.Store(stores);
 
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
+Vue.prototype.$axios = axios;
 
 /* eslint-disable no-new */
 new Vue({
