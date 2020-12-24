@@ -1,5 +1,9 @@
 export const asyncRoutes = [
-
+    {
+        path: '/userManage',
+        name: 'userManage',
+        component: () => import('../views/user/userManage')
+    },
     {
         path: '/found',
         name: 'found',
@@ -14,6 +18,11 @@ export const asyncRoutes = [
         path: '/home',
         name: 'home',
         component: () => import('../views/home')
+    },
+    {
+        path: '/chart',
+        name: 'chart',
+        component: () => import('../views/echart')
     },
     // {
     //     path: '/errors',

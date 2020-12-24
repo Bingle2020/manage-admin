@@ -10,7 +10,17 @@ module.exports = {
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {},
+    proxyTable: {
+      '/api': {
+        target: 'http://shuige.wicp.vip:8080',  //目标接口域名
+        changeOrigin: true,  //是否跨域
+        pathRewrite: {
+          '^/api': ''   //重写接口 后台接口指向不统一  所以指向所有/
+        },
+        secure: false
+      },
+      cssSourceMap: false
+    },
 
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST

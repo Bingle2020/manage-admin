@@ -70,8 +70,13 @@ export default {
           ]
         },
         {
-          title: '登录页',
-          path: '/login',
+          title: '用户管理',
+          path: '/userManage',
+          childs:[]
+        },
+        {
+          title: '统计图表',
+          path: '/chart',
           childs:[]
         },
         {

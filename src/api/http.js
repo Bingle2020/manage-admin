@@ -1,5 +1,5 @@
 import axios from 'axios';
-import Cookies from 'js-cookie'
+import Cookies from 'js-cookie';
 import qs from 'qs';
 import store from '@/vuex/index';
 import router from '../router';
@@ -42,8 +42,8 @@ axios.defaults.transformRequest = data => qs.stringify(data); // 针对post请�
 axios.interceptors.request.use(
     config => {
         // 每次发送请求之前判断是否存在token，如果存在，则统一在http请求的header都加上token，不用每次请求都手动添加
-        // let token = Cookies.get('token');
-        let token = store.state.token;
+        let token = Cookies.get('token');
+        // let token = store.state.token;
         token && (config.headers.Authorization = token);
         return config;
     },
@@ -91,8 +91,8 @@ axios.interceptors.response.use(
                         message: '登录过期，请重新登录',
                     });
                     // 清除本地token/清空vuex中token
-                    // Cookies.remove('token');
-                    store.commit(['delToken']);
+                    Cookies.remove('token');
+                    store.dispatch('delToken');
                     // 跳转登录页面
                     setTimeout(() => {
                         router.replace({
