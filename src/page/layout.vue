@@ -12,10 +12,10 @@
 </template>
 
 <script>
-import Menu from "@/components/layout/menu";
-import Header from "@/components/layout/header";
-// import Tabs from "@/components/layout/tabs";
-import Content from "@/components/layout/content";
+import Menu from "@/page/layout/menu";
+import Header from "@/page/layout/header";
+// import Tabs from "@/page/layout/tabs";
+import Content from "@/page/layout/content";
 export default {
   components: {
     Menu,
