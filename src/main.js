@@ -18,14 +18,15 @@ import '@/assets/css/element.scss';
 const whiteList = ['/login']
 
 router.beforeEach((to, from, next) => {
-    if (Cookies.get('token')) {
+    if (Cookies.get('accessToken')) {
         // 已登录且要跳转的是登录页
         if (to.path === '/login') {
             Message({
                 message: '您已登陆，不需要重新登陆！',
                 duration: 2000
             });
-            return;
+            
+            next({path:'/'})
         } else {
             next()
         }

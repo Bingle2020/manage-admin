@@ -13,7 +13,11 @@
       >
         <template v-for="main in menuLists">
           <!-- 一级菜单1 -->
-          <el-menu-item v-if="main.childs.length <= 0" :index="main.path" :key="main.path">
+          <el-menu-item
+            v-if="main.childs.length <= 0"
+            :index="main.path"
+            :key="main.path"
+          >
             <i class="el-icon-menu"></i>
             <span slot="title">{{ main.title }}</span>
           </el-menu-item>
@@ -26,17 +30,28 @@
             <div class="menu-area">
               <!-- 二级菜单 -->
               <template v-for="child in main.childs">
-                <el-menu-item v-if="child.childs.length <= 0" :index="child.path" :key="child.path" class="single-item">{{ child.title }}</el-menu-item>
+                <el-menu-item
+                  v-if="child.childs.length <= 0"
+                  :index="child.path"
+                  :key="child.path"
+                  class="single-item"
+                  >{{ child.title }}</el-menu-item
+                >
                 <el-submenu v-else :index="child.path" :key="child.path">
                   <template slot="title">{{ child.title }}</template>
                   <!-- 三级菜单 -->
-                  <el-menu-item v-for="item in child.childs" :key="item.path" :index="item.path" class="list-item-child">{{ item.title }}</el-menu-item>
+                  <el-menu-item
+                    v-for="item in child.childs"
+                    :key="item.path"
+                    :index="item.path"
+                    class="list-item-child"
+                    >{{ item.title }}</el-menu-item
+                  >
                 </el-submenu>
               </template>
-            </div>         
+            </div>
           </el-submenu>
         </template>
-
       </el-menu>
     </el-col>
   </el-row>
@@ -44,77 +59,72 @@
 
 <script>
 export default {
-  name: 'menus',
+  name: "menus",
   data() {
     return {
       menuLists: [
         {
-          title: '首页',
-          path: '/asdd',
+          childs: [],
+          id: "1",
+          path: "/admin",
+          title: "首页",
+        },
+        {
+          path: "/1608883583724",
           childs: [
             {
-              title: '发现页',
-              path: '/found',
-              childs: []
+              childs: [],
+              id: "4",
+              path: "/dec/visible/index",
+              title: "可视对讲",
             },
-            {
-              title: '个人页',
-              path: '/person',
-              childs: []
-            },
-            {
-              title: '主页',
-              path: '/home',
-              childs: []
-            },
-          ]
+          ],
+          id: "2",
+          title: "流调管理",
         },
         {
-          title: '用户管理',
-          path: '/userManage',
-          childs:[]
-        },
-        {
-          title: '统计图表',
-          path: '/chart',
-          childs:[]
-        },
-        {
-          title: '报错',
-          path: 'eoiahf',
+          path: "/1608883694400",
           childs: [
             {
-              title: '服务报错',
-              path: '/errors',
-              childs: [
-                {
-                  title: '401',
-                  path: '/errors/401',
-                },
-                {
-                  title: '403',
-                  path: '/errors/403',
-                },
-                {
-                  title: '404',
-                  path: '/errors/404',
-                },
-                {
-                  title: 'error',
-                  path: '/errors/error',
-                },
-                {
-                  title: 'netsplit',
-                  path: '/errors/netsplit',
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    }
+              childs: [],
+              id: "7",
+              path: "/count/decAlarmCount",
+              title: "流调报警统计",
+            },
+          ],
+          id: "5",
+          title: "查询统计",
+        },
+        {
+          path: "/1608883775963",
+          childs: [
+            {
+              childs: [],
+              id: "10",
+              path: "/userManage",
+              title: "角色管理",
+            },
+          ],
+          id: "8",
+          title: "系统设置",
+        },
+      ],
+    };
   },
   methods: {
+    // 加载菜单列表
+    loadMenus() {
+      this.$axios
+        .get("api/nesarc/loadMenus")
+        .then((res) => {
+          let datas = res.response.data;
+          this.menuLists = this.menuLists.length > 0 ? this.menuLists : [...datas];
+          console.log('菜单加载成功');
+        })
+        .catch((err) => {
+          console.log("菜单加载失败");
+        });
+    },
     handleOpen(key, keyPath) {
       console.log(key, keyPath);
     },
@@ -122,16 +132,19 @@ export default {
       console.log(key, keyPath);
     },
   },
+  created() {
+    this.loadMenus();
+  },
 };
 </script>
 
 <style lang="scss" scoped>
 .menu-box {
-    height: 100%;
-    width: 100%;
+  height: 100%;
+  width: 100%;
 }
 .el-menu {
-    height: 100%;
+  height: 100%;
 }
 /deep/ .el-submenu__title {
   text-align: left;
