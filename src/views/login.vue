@@ -1,17 +1,24 @@
 <template>
   <div class="login-wrap WHC">
     <div class="box">
-      <div>
-        账号：
-        <el-input placeholder="请输入账号" v-model="account"> </el-input>
+      <div class="box-item">
+        <h2 style="color: #fff">盛视科技</h2>
       </div>
-      <div>
-        密码：
-        <el-input type="password" placeholder="请输入密码" v-model="password">
+      <div class="box-item">
+        <el-input placeholder="请输入账号" v-model="account">
+          <template slot="prepend"><i class="el-icon-user"></i></template>
         </el-input>
       </div>
-      <div>
+      <div class="box-item">
+        <el-input type="password" placeholder="请输入密码" v-model="password">
+          <template slot="prepend"><i class="el-icon-key"></i></template>
+        </el-input>
+      </div>
+      <div class="box-item martop">
         <el-button @click="login" type="primary">登录</el-button>
+      </div>
+      <div class="box-item flbottom">
+        <el-button type="text">注册</el-button>
       </div>
     </div>
   </div>
@@ -43,10 +50,12 @@ export default {
               Object.keys(datas).forEach((item) => {
                 Cookies.set(item, datas[item]);
               });
-              console.log('保存成功');
+              console.log("保存成功");
               // 跳转到主页
-              let toPath = this.$route.query.redirect ? this.$route.query.redirect : '/';
-              this.$router.push({path: toPath});
+              let toPath = this.$route.query.redirect
+                ? this.$route.query.redirect
+                : "/";
+              this.$router.push({ path: toPath });
             }
             // 账号密码失败
             else {
@@ -59,10 +68,10 @@ export default {
           })
           .catch((err) => {
             this.$message({
-                message: err,
-                duration: 2000,
-                type: "error",
-              });
+              message: err,
+              duration: 2000,
+              type: "error",
+            });
           });
       } else {
         this.$message({
@@ -73,16 +82,52 @@ export default {
       }
     },
   },
-  created() {
-  }
+  created() {},
 };
 </script>
 
 <style lang="scss" scoped>
-.box {
-  width: 500px;
-  height: 400px;
-  margin: 50px auto;
-  border: 1px solid black;
+.login-wrap {
+  background-image: url("../assets/images/background.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  .box {
+    position: relative;
+    width: 450px;
+    height: 330px;
+    margin: 80px auto;
+    padding: 25px 40px;
+    border: 1px solid black;
+    border-radius: 10px;
+    box-shadow: 1px 1px 6px 0px #8b8f90b5;
+    box-sizing: border-box;
+    .box-item {
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      &.martop {
+        margin-top: 30px;
+      }
+      &.flbottom {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        padding: 0 20px;
+      }
+      .el-icon-user {
+        font-size: 18px;
+      }
+      .el-icon-key {
+        font-size: 18px;
+      }
+      .el-button--primary {
+        width: 300px;
+      }
+      .el-input {
+        width: 300px;
+      }
+    }
+  }
 }
 </style>
