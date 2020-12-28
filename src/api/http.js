@@ -139,7 +139,7 @@ axios.interceptors.response.use(
             message: '登录过期，请重新登录',
           });
           // 清除本地token/清空vuex中token
-          Cookies.remove('token');
+          Cookies.remove('accessToken');
           store.dispatch('delToken');
           // 跳转登录页面
           setTimeout(() => {

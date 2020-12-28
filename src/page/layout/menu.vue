@@ -22,7 +22,7 @@
             <span slot="title">{{ main.title }}</span>
           </el-menu-item>
           <!-- 一级菜单2 -->
-          <el-submenu v-else :index="main.path" :key="main.path">
+          <el-submenu v-else :index="main.path ? main.path : main.title + new Date().getTime()" :key="main.path">
             <template slot="title">
               <i class="el-icon-location"></i>
               <span>{{ main.title }}</span>
@@ -37,7 +37,7 @@
                   class="single-item"
                   >{{ child.title }}</el-menu-item
                 >
-                <el-submenu v-else :index="child.path" :key="child.path">
+                <el-submenu v-else :index="child.path ? child.path : child.title + new Date().getTime()" :key="child.path">
                   <template slot="title">{{ child.title }}</template>
                   <!-- 三级菜单 -->
                   <el-menu-item
@@ -62,53 +62,7 @@ export default {
   name: "menus",
   data() {
     return {
-      menuLists: [
-        {
-          childs: [],
-          id: "1",
-          path: "/admin",
-          title: "首页",
-        },
-        {
-          path: "/1608883583724",
-          childs: [
-            {
-              childs: [],
-              id: "4",
-              path: "/dec/visible/index",
-              title: "可视对讲",
-            },
-          ],
-          id: "2",
-          title: "流调管理",
-        },
-        {
-          path: "/1608883694400",
-          childs: [
-            {
-              childs: [],
-              id: "7",
-              path: "/count/decAlarmCount",
-              title: "流调报警统计",
-            },
-          ],
-          id: "5",
-          title: "查询统计",
-        },
-        {
-          path: "/1608883775963",
-          childs: [
-            {
-              childs: [],
-              id: "10",
-              path: "/userManage",
-              title: "角色管理",
-            },
-          ],
-          id: "8",
-          title: "系统设置",
-        },
-      ],
+      menuLists: [],
     };
   },
   methods: {
@@ -118,7 +72,8 @@ export default {
         .get("api/nesarc/loadMenus")
         .then((res) => {
           let datas = res.response.data;
-          this.menuLists = this.menuLists.length > 0 ? this.menuLists : [...datas];
+          // this.menuLists = this.menuLists.length > 0 ? this.menuLists : [...datas];
+          this.menuLists = [...datas];
           console.log('菜单加载成功');
         })
         .catch((err) => {

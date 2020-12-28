@@ -1,5 +1,5 @@
 <template>
-  <div class="box">
+  <div class="search-wrap">
     <span class="title">
       <i class="el-icon-search b"></i>
       查询
@@ -33,6 +33,10 @@
     <div class="search rt to-search reset">
       <el-button @click="resetSearch" class="ab" type="success" icon="el-icon-refresh" round>重置</el-button>
     </div>
+    <!-- 添加类型按钮 -->
+    <div v-if="add" class="search rt to-search operate">
+      <el-button type="primary" @click="addfn" class="ab add" round>{{ addText }}</el-button>
+    </div>
   </div>
 </template>
 
@@ -61,6 +65,14 @@ export default {
       type: Object,
       default: () => ({}),
     },
+    add: {
+      type: Boolean,
+      default: () => false
+    },
+    addText: {
+      type: String,
+      default: () => '添加'
+    },
   },
   methods: {
     // 搜索
@@ -86,17 +98,22 @@ export default {
         item.key = '';
         item.value = ''
       });
+    },
+    // 添加
+    addfn() {
+      this.$emit('addfn');
     }
   }
 };
 </script>
 
 <style lang="scss" scoped>
-.box {
+.search-wrap {
+  height: 83px;
   background-color: white;
   padding: 5px 10px;
   border-radius: 5px;
-  overflow: hidden;
+  // overflow: hidden;
   .title {
     padding-top: 10px;
     text-align: center;
@@ -128,6 +145,11 @@ export default {
       margin: auto;
       padding: 0;
       line-height: 30px;
+    }
+    &.operate {
+      width: 80px;
+      float: right;
+      margin: 0 20px;
     }
   }
   .reset {

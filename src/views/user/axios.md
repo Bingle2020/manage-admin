@@ -29,3 +29,12 @@ userPwd;密码
 /api/nesarc/user/delete删除用户
 post
 参数：id
+
+/api/nesarc/role/getRoleList获取角色列表
+get
+
+角色管理：
+/api/role/getData 角色列表
+/api/role/save新增
+/api/role/update修改
+/api/role/remove删除(参数id)
