@@ -127,6 +127,7 @@ export default {
       ],
       action: {
         title: "操作",
+        width: undefined,
         actions: [
           {
             edit: "修改",

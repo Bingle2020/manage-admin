@@ -79,7 +79,10 @@ axios.interceptors.response.use(
           Object.keys(data).forEach((item) => {
             Cookies.set(item, data[item]);
           });
-          console.log('重新获取身份成功！');
+          Message({
+            message: '重新获取身份成功！',
+            duration: 1000
+          });
         } else {
           Message({
             showClose: true,
@@ -88,11 +91,19 @@ axios.interceptors.response.use(
           });
         }
       }).catch(err => {
-        console.log('err', err);
+        Message({
+          showClose: true,
+          message: err,
+          duration: 2000
+        });
       })
     }
     // response节点不为空，并且为对象，并且code 为3的时候，两个token都失效了，转到登录界面去
     else if (res && res.code === 3) {
+      let info = ['accessToken','refreshToken','account','userName'];
+      info.forEach(item=>{
+        Cookies.remove(item);
+      })
       Message({
         showClose: true,
         message: '登录过期，请重新登录!',

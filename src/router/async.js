@@ -5,6 +5,11 @@ export const asyncRoutes = [
         component: () => import('../views/user/userManage')
     },
     {
+        path: '/roleManage',
+        name: 'roleManage',
+        component: () => import('../views/user/roleManage')
+    },
+    {
         path: '/found',
         name: 'found',
         component: () => import('../views/found')

@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import Cookies from 'js-cookie'
+import Cookies from "js-cookie";
 export default {
   name: "App",
   created() {
@@ -15,7 +15,7 @@ export default {
     // window.addEventListener("beforeunload", () => {
     //   Cookies.set('token', this.$store.getters.getToken);
     // });
-  },
+  }
 };
 </script>
 

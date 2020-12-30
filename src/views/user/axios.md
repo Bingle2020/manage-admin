@@ -34,7 +34,8 @@ post
 get
 
 角色管理：
-/api/role/getData 角色列表
-/api/role/save新增
-/api/role/update修改
-/api/role/remove删除(参数id)
+/api/nesarc/role/getData 角色列表
+/api/nesarc/role/save新增:
+roleName isAdmin(1是0否）menuId(多个用,隔开 ）
+/api/nesarc/role/update修改
+/api/nesarc/role/remove删除(参数id)

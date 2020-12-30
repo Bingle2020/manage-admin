@@ -18,7 +18,7 @@
                          :width="item.width"
                          :key="i">
         </el-table-column>
-        <el-table-column v-if="Object.keys(actions).length > 0" fixed="right" :label="actions.title">
+        <el-table-column v-if="actions" :width="actions.width" fixed="right" :label="actions.title">
           <template slot-scope="scope">
             <el-button v-for="(item,i) in actions.actions"
                        @click="handleClick(item.fn, scope.row)"
@@ -73,7 +73,7 @@ export default {
     },
     actions: {
         type: Object,
-        default: () => {}
+        default: () => undefined
     },
     splitPage: {
         type: Boolean,
