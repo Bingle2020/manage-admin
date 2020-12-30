@@ -7,7 +7,7 @@ export default {
     delToken(state) {
         state.token = '';
     },
-    modify(state,newval) {
-        state.name = newval;
+    changeCollapse(state) {
+        state.isCollapse = !state.isCollapse;
     }
 }

@@ -5,12 +5,12 @@
         <h2 style="color: #fff">盛视科技</h2>
       </div>
       <div class="box-item">
-        <el-input placeholder="请输入账号" v-model="account">
+        <el-input autocomplete placeholder="请输入账号" v-model="account">
           <template slot="prepend"><i class="el-icon-user"></i></template>
         </el-input>
       </div>
       <div class="box-item">
-        <el-input type="password" placeholder="请输入密码" v-model="password">
+        <el-input autocomplete type="password" placeholder="请输入密码" v-model="password">
           <template slot="prepend"><i class="el-icon-key"></i></template>
         </el-input>
       </div>

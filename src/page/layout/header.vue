@@ -2,7 +2,7 @@
     <div class="main-header">
         <!-- 详情页头部地址提示栏 -->
         <div class="main-header-left">
-            <i class="el-icon-s-fold icon"></i>
+            <i @click="collapse" class="el-icon-s-fold icon"></i>
             <div class="address-title">地址</div>
         </div>
         <!-- 详情页头部右边个人头像栏 -->
@@ -19,6 +19,11 @@ export default {
     data() {
         return {
             avatar: require('@/assets/images/avatar.jpg')
+        }
+    },
+    methods: {
+        collapse() {
+            this.$store.dispatch('collapse');
         }
     }
 }
@@ -41,6 +46,7 @@ export default {
         font-size: 25px;
         line-height: inherit;
         padding-right: 12px;
+        cursor: pointer;
     }
     .address-title {
         float: left;

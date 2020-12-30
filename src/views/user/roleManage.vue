@@ -41,37 +41,8 @@
           </el-select>
         </el-form-item>
         <el-form-item label="菜单权限" :label-width="inputWid" required>
-          <!-- <el-checkbox
-            :indeterminate="isIndeterminate"
-            v-model="selAll"
-            @change="selAllChange"
-            >全选</el-checkbox
-          >
-          <div style="margin: 15px 0"></div>
-          <el-checkbox-group
-            v-model="roleInfo.menuId"
-            @change="selSingleChange"
-          >
-            <el-checkbox
-              v-for="item in authority"
-              :label="item.value"
-              :key="item.id"
-              >{{ item.title }}</el-checkbox
-            >
-          </el-checkbox-group> -->
-          <div class="tree-node">
-            <el-checkbox v-model="selAll" @change="selAllChange" style="padding-left: 7px;">全选</el-checkbox>
-            <el-tree
-              :data="authority"
-              show-checkbox
-              node-key="id"
-              ref="tree"
-              highlight-current
-              :props="defaultProps"
-              @check-change="selSingleChange"
-            >
-            </el-tree>
-          </div>
+          <right-tree :data="authority" ref="rightTree" @change="getSeled">
+          </right-tree>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -85,70 +56,66 @@
 <script>
 import topSearch from "@/components/search/topSearch";
 import myTable from "@/components/table/myTable";
+import rightTree from "@/components/tree/rightTree";
 export default {
   components: {
     topSearch,
     myTable,
+    rightTree,
   },
   data() {
     return {
       authority: [
         {
-          id: 1,
-          label: "流调管理",
+          id: "@1",
+          label: "控制中心",
           children: [
             {
-              id: 4,
-              label: "流调管理",
+              id: "@4",
+              label: "监控控制",
               children: [
                 {
                   id: 9,
-                  label: "流调管理",
+                  label: "可视化",
                 },
                 {
                   id: 10,
-                  label: "流调管理",
+                  label: "密集度",
                 },
               ],
             },
           ],
         },
         {
-          id: 2,
-          label: "流调管理",
+          id: "@2",
+          label: "隔离区中心",
           children: [
             {
               id: 5,
-              label: "流调管理",
+              label: "报警",
             },
             {
               id: 6,
-              label: "流调管理",
+              label: "安防",
             },
           ],
         },
         {
-          id: 3,
-          label: "流调管理",
+          id: "@3",
+          label: "外场中心",
           children: [
             {
               id: 7,
-              label: "流调管理",
+              label: "接机室",
             },
             {
               id: 8,
-              label: "流调管理",
+              label: "候机室",
             },
           ],
         },
       ],
-      defaultProps: {
-        children: "children",
-        label: "label",
-      },
       num: [0, 1],
-      selAll: false,
-      isIndeterminate: true,
       editBox: false,
       editType: 0,
       roleInfo: {
@@ -201,24 +168,18 @@ export default {
       },
     };
   },
+  watch: {
+    editBox: {
+      handler(newval, oldval) {
+        oldval && !newval ? this.clearInfo() : '';
+      },
+      immediate: true,
+    },
+  },
   methods: {
-    // 全选
-    selAllChange(val) {
-      let arr = val ? [1,2,3,4,5,6,7,8,9,10] : [];
-      this.$refs.tree.setCheckedKeys(arr);
-    },
-    // 获取全部勾选的
-    getAllSel() {
-      console.log(this.$refs.tree.getCheckedKeys());
-    },
-    // 单选
-    selSingleChange() {
-      let result = this.$refs.tree.getCheckedKeys();
-      if(result.length >= 10) {
-        this.selAll = true;
-      }else {
-        this.selAll = false;
-      }
+    // 获取勾选结果
+    getSeled(result) {
+      this.roleInfo.menuId = [...result];
     },
     // 加载列表数据
     loadData() {
@@ -233,7 +194,7 @@ export default {
         });
     },
     operateFn(obj) {
-      this[obj.fn](obj.data.id);
+      this[obj.fn](obj.data);
     },
     // 搜索条件
     search(obj) {
@@ -246,38 +207,36 @@ export default {
     },
     // 确定添加角色
     sureAddUser() {
-      this.getAllSel();
-      // if (this.roleInfo.roleName === "") {
-      //   return this.$message({
-      //     message: "请输入角色名称!",
-      //     type: "error",
-      //   });
-      // } else if (this.roleInfo.menuId.length <= 0) {
-      //   return this.$message({
-      //     message: "请选择菜单权限!",
-      //     type: "error",
-      //   });
-      // }
-      // let data = { ...this.roleInfo, menuId: this.roleInfo.menuId.join(",") };
-      // this.$axios
-      //   .post("/api/nesarc/role/save", data)
-      //   .then((res) => {
-      //     if (res.success) {
-      //       this.loadData();
-      //       this.editBox = false;
-      //       this.clearInfo();
-      //       this.$message({
-      //         message: "角色添加成功!",
-      //         type: "success",
-      //       });
-      //     }
-      //   })
-      //   .catch((err) => {
-      //     this.$message({
-      //       message: "添加失败!",
-      //       type: "error",
-      //     });
-      //   });
+      if (this.roleInfo.roleName === "") {
+        return this.$message({
+          message: "请输入角色名称!",
+          type: "error",
+        });
+      } else if (this.roleInfo.menuId.length <= 0) {
+        return this.$message({
+          message: "请选择菜单权限!",
+          type: "error",
+        });
+      }
+      let data = { ...this.roleInfo, menuId: this.roleInfo.menuId.join(",") };
+      this.$axios
+        .post("/api/nesarc/role/save", data)
+        .then((res) => {
+          if (res.success) {
+            this.loadData();
+            this.editBox = false;
+            this.$message({
+              message: "角色添加成功!",
+              type: "success",
+            });
+          }
+        })
+        .catch((err) => {
+          this.$message({
+            message: "添加失败!",
+            type: "error",
+          });
+        });
     },
     // 清楚输入框历史信息
     clearInfo() {
@@ -286,9 +245,12 @@ export default {
         isAdmin: 0,
         menuId: [],
       };
+      this.$nextTick(() => {
+        this.$refs.rightTree.setTree([]);
+      });
     },
     // 删除角色
-    delData(id) {
+    delData({ id }) {
       this.$confirm("即将删除该角色, 是否继续?", "警告", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
@@ -323,8 +285,17 @@ export default {
         });
     },
     // 修改角色
-    modifyData(id) {
-      console.log(id);
+    modifyData(row) {
+      this.editBox = true;
+      this.editType = 1;
+      this.roleInfo = {
+        roleName: row.roleName,
+        isAdmin: Number(row.isAdmin),
+        menuId: row.menuId.split(","),
+      };
+      this.$nextTick(() => {
+        this.$refs.rightTree.setTree(this.roleInfo.menuId);
+      });
     },
     sizeChange(val) {
       console.log(val);

@@ -3,7 +3,8 @@ export default {
     getToken(state) {
         return state.token;
     },
-    look(state) {
-        return state.name
+    // 折叠状态
+    collapse(state) {
+        return state.isCollapse;
     }
 }

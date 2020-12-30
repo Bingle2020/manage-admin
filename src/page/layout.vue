@@ -1,6 +1,9 @@
 <template>
   <el-container>
-    <el-aside width="202px">
+    <el-aside
+      :class="collapse ? 'slow' : 'fast'"
+      :width="collapse ? '65px' : '202px'"
+    >
       <Menu></Menu>
     </el-aside>
     <el-main>
@@ -16,13 +19,22 @@ import Menu from "@/page/layout/menu";
 import Header from "@/page/layout/header";
 // import Tabs from "@/page/layout/tabs";
 import Content from "@/page/layout/content";
+import { mapGetters } from "vuex";
 export default {
   components: {
     Menu,
     Header,
     // Tabs,
-    Content
-  }
+    Content,
+  },
+  data() {
+    return {
+      width: 202,
+    };
+  },
+  computed: {
+    ...mapGetters(["collapse"]),
+  },
 };
 </script>
 
@@ -35,6 +47,12 @@ export default {
   height: 100%;
   color: rgb(24, 22, 22);
   box-sizing: border-box;
+}
+.fast {
+  transition: width 0.2s cubic-bezier(0.94, -0.37, 0.97, 0.98) .2s;
+}
+.slow {
+  transition: width 0s linear;
 }
 .el-main {
   padding: 0;

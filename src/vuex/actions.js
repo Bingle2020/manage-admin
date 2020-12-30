@@ -5,7 +5,7 @@ export default {
     delToken(context,token) {
         context.commit('delToken');
     },
-    dispathM(context) {
-        context.commit('modify', 'Bin2020');
+    collapse(context) {
+        context.commit('changeCollapse');
     }
 }

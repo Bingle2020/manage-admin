@@ -65,6 +65,7 @@ axios.interceptors.request.use(
  * 响应拦截器
  * 服务器返回信息 -> [拦截的统一处理] -> 客户端js获取到的信息
  */
+
 axios.interceptors.response.use(
   response => {
     const res = response.data.response;
@@ -134,6 +135,11 @@ axios.interceptors.response.use(
       // 服务器仍有返回结果
       switch (status) {
         case 401: // 当前请求需要用户验证(一般是未登录)
+        Message({
+          showClose: true,
+          message: '请先登录',
+          type: 'warning'
+        });
           // 未登录则跳转登录页面，并携带当前页面的路径
           router.replace({
             path: '/login',
@@ -149,9 +155,8 @@ axios.interceptors.response.use(
             showClose: true,
             message: '登录过期，请重新登录',
           });
-          // 清除本地token/清空vuex中token
+          // 清除本地token
           Cookies.remove('accessToken');
-          store.dispatch('delToken');
           // 跳转登录页面
           setTimeout(() => {
             router.replace({
@@ -171,11 +176,7 @@ axios.interceptors.response.use(
           });
           break;
         default: // 其他错误，直接抛出错误提示
-          Message({
-            showClose: true,
-            message: error.response.data.message,
-            type: 'error'
-          });
+          console.log('error', error);
       }
       return Promise.reject(error.response);
     } else {
