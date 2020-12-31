@@ -67,11 +67,11 @@ export default {
     return {
       authority: [
         {
-          id: "@1",
+          id: 1,
           label: "控制中心",
           children: [
             {
-              id: "@4",
+              id: 4,
               label: "监控控制",
               children: [
                 {
@@ -87,7 +87,7 @@ export default {
           ],
         },
         {
-          id: "@2",
+          id: 2,
           label: "隔离区中心",
           children: [
             {
@@ -101,7 +101,7 @@ export default {
           ],
         },
         {
-          id: "@3",
+          id: 3,
           label: "外场中心",
           children: [
             {
@@ -179,6 +179,7 @@ export default {
   methods: {
     // 获取勾选结果
     getSeled(result) {
+      console.log(result);
       this.roleInfo.menuId = [...result];
     },
     // 加载列表数据

@@ -53,13 +53,15 @@ export default {
     selAllChange(val) {
       let result = val ? this.ids : [];
       this.$refs.tree.setCheckedKeys(result);
-      this.$emit("change", result);
+      let seled = this.$refs.tree.getCheckedKeys(true);
+      this.$emit("change", seled);
     },
     // 单选
     selSingleChange() {
       let result = this.$refs.tree.getCheckedKeys();
       this.selAll = result.length >= this.ids.length ? true : false;
-      this.$emit("change", result);
+      let seled = this.$refs.tree.getCheckedKeys(true);
+      this.$emit("change", seled);
     },
   },
 };
