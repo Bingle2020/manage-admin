@@ -10,9 +10,12 @@ import Cookies from 'js-cookie';
 import axios from '@/api/http';
 import { Message } from 'element-ui';
 import echarts from 'echarts';
-import '@/assets/css/common.scss';
+import '@/assets/css/common/common.scss';
 import 'element-ui/lib/theme-chalk/index.css';
-import '@/assets/css/element.scss';
+import '@/assets/css/element/element.scss';
+import '@/assets/css/icon/iconfont.css';
+import '@/assets/css/icon/index/index.scss';
+import '@/assets/css/icon/iconfont.js';
 
 // 白名单列表
 const whiteList = ['/login']

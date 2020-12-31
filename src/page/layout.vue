@@ -34,7 +34,7 @@ export default {
   },
   computed: {
     ...mapGetters(["collapse"]),
-  },
+  }
 };
 </script>
 
@@ -49,7 +49,7 @@ export default {
   box-sizing: border-box;
 }
 .fast {
-  transition: width 0.2s cubic-bezier(0.94, -0.37, 0.97, 0.98) .2s;
+  transition: width 0.2s cubic-bezier(0.94, -0.37, 0.97, 0.98) 0.2s;
 }
 .slow {
   transition: width 0s linear;

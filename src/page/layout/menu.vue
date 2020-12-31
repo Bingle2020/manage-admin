@@ -86,7 +86,7 @@ export default {
             {
               childs: [],
               id: "4",
-              path: "/dec/visible/index",
+              path: "/found",
               title: "可视对讲",
             },
           ],
@@ -98,7 +98,7 @@ export default {
             {
               childs: [],
               id: "7",
-              path: "/count/decAlarmCount",
+              path: "/person",
               title: "流调报警统计",
             },
           ],
@@ -129,6 +129,13 @@ export default {
   computed: {
     ...mapGetters(['collapse']),
   },
+  watch: {
+    $route(to, from) {
+      console.log(to.path);
+      // to , from 分别表示从哪跳转到哪，都是一个对象
+      // to.path  ( 表示的是要跳转到的路由的地址 eg: /home )
+    },
+  },
   methods: {
     // 加载菜单列表
     loadMenus() {
@@ -145,10 +152,10 @@ export default {
         });
     },
     handleOpen(key, keyPath) {
-      console.log(key, keyPath);
+      
     },
     handleClose(key, keyPath) {
-      console.log(key, keyPath);
+      
     },
   },
   created() {

@@ -6,5 +6,5 @@ Vue.use(Router)
 
 export default new Router({
   routes: constantRoutes,
-  mode: 'history'
+  mode: 'hash'
 })
